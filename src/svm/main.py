@@ -1,5 +1,7 @@
 from sklearn.datasets import make_moons
 import matplotlib.pyplot as plt
+from perceptron import Perceptron
+from visualization import plot_decision_boundary
 
 X, y = make_moons(
     n_samples=200,
@@ -7,6 +9,10 @@ X, y = make_moons(
     random_state=42
 )
 
-plt.scatter(X[:, 0], X[:, 1], c=y)
+y = 2 * y - 1
 
-plt.show()
+clf = Perceptron()
+
+clf.fit(X, y)
+
+plot_decision_boundary(X, y, clf)
