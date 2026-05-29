@@ -10,10 +10,12 @@ class LogisticRegression:
 
         self.weights = None
         self.bias = None
+        
+        self.losses = []
 
-    def sigmoid(self, x):
+    def sigmoid(self, z):
 
-        return 1 / (1 + np.exp(-x))
+        return 1 / (1 + np.exp(-z))
 
     def fit(self, X, y):
 
@@ -22,11 +24,17 @@ class LogisticRegression:
         self.weights = np.zeros(n_features)
         self.bias = 0
 
-        for _ in range(self.n_iters):
+        for i in range(self.n_iters):
 
             linear_model = np.dot(X, self.weights) + self.bias
 
             y_predicted = self.sigmoid(linear_model)
+            
+            loss = -np.mean(
+                y*np.log(y_predicted) + 
+                (1 - y)*np.log(1 - y_predicted+1e-15)
+            )
+            self.losses.append(loss)
 
             dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
 

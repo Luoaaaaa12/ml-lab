@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 from logistic_regression import LogisticRegression
-
+from visualization import plot_loss, plot_decision_boundary
 X, y = make_classification(
     n_samples=1000,
     n_features=2,
@@ -31,5 +31,6 @@ clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
 
 accuracy = accuracy_score(y_test, predictions)
-
+plot_loss(clf.losses)
+plot_decision_boundary(X_test, y_test, clf)
 print("Accuracy:", accuracy)
